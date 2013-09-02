@@ -21,7 +21,9 @@ it it will fall back to AHD demosaicing.
 To build and install filmulator, run
 
 `make` (-j[number of cores your processor has])
+
 `make installconf`
+
 `make install` (requires sudo)
 
 # Running Filmulator
