@@ -1,0 +1,16 @@
+filmulator: setup program
+    initialize: grabs configuration from the text file
+    convert_from_raw: uses dcraw to demosaic a file and store it in a temp directory.
+    filmulate: the main script.
+        imload: loads image(s).
+            imread: loads data from ppm files
+            imread_tiff: loads data from tiff files
+            merge_exps: merges HDR exposures intelligently into one seamless file.
+        DEVELOPMENT LOOP: The following two routines are run repeatedly.
+        subfilmulator: runs subtasks in threads. We slice the image into horizontal slices, develop and diffuse, then slice the image into vertical slices and diffuse in that direction.
+            develop: runs a step of the chemical development process.
+            diffuse: applies a gaussian blur to the developer chemical in one direction.
+                convolve2: runs a true gaussian blur convolution. Not used because it's slow.
+                convolve_box2: runs repeated box blurs to approximate a gaussian.
+        agitate: completely mixes the developer. This happens only every few cycles as set by the configuration file.
+        OUTPUT: We adjust the density. 
