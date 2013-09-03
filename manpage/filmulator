@@ -1,0 +1,50 @@
+.\" Manpage for filulator
+.TH man 1 "03 September 2013" "0.5" "filmulator man page"
+.SH NAME
+filmulator \- A film emulator with all of the positives and none of the negatives.
+.SH SYNOPSIS
+filmulator [options] <input filename> [exposure compensation]
+.SH DESCRIPTION
+Filmulator takes in a linear image file (such as a camera raw file) and uses it to virtually expose and develop film. The resulting image has compressed overall dynamic range, but increased local contrast and saturation, without jarring artifacts like haloing.
+.SH OPTIONS
+-c <configuration file>
+
+	sets the configuration file to use in this filmulation.
+
+-t
+
+	used when inputting a tiff file instead of a raw file.
+
+-ji
+
+	used when inputting a jpeg file instead of a raw file.
+
+-h <number of images>
+
+	sets input mode to HDR. This mode naturally stitches linear images together so that it appears that the camera had more dynamic range. At the end of the options, make sure to list all images with the exposure compensation used at capture in order from darkest to brightest image (e.g. filmulator -h 3 image1 -1 image2 0 image3 1)
+
+-w <whitepoint>
+
+	sets the final film density that is pure white in the output. This can be used when converting a video to keep dark scenes dark in the output. 2.0 is a reasonable value for the whitepoint.
+
+-jo
+
+	sets the output to a jpeg instead of a tiff
+
+-n
+
+	sets the output to use a tone curve that works well with most images. This option is useful if you do not intend to set your own tone curve in postprocessing.
+
+-l <highlight recovery code>
+
+	sets Filmulator to use highlight recovery when processing raw files. The highlight recovery code corresponds to the equivalent option in dcraw.
+
+
+.SH SEE ALSO
+
+You can find more information about Filmulator and some tips on its use at http://mermerico.github.io/filmulator
+
+
+.SH AUTHOR
+
+Filmulator was originally written by Carlo Vaccari and Omer Mano in 2012 and was publicly released in 2013 under GPL license.

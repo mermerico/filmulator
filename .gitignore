@@ -12,6 +12,6 @@
 *.la
 *.a
 
-filmulator
+/filmulator
 *.swp
 *~

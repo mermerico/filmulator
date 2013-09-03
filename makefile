@@ -33,4 +33,4 @@ install: filmulator manpage/filmulator.1.gz
 	mkdir -p $(INSTALL_PATH)/man/man1
 	cp $(SRCDIR)/manpage/filmulator.1.gz $(INSTALL_PATH)/man/man1/filmulate.1.gz
 clean:
-	rm -f *.o *~
+	rm -f *.o *~ manpage/*.gz
