@@ -1,4 +1,6 @@
 .\" Manpage for filulator
+.\" Disable justification
+.ad l
 .TH man 1 "03 September 2013" "0.5" "filmulator man page"
 .SH NAME
 filmulator \- A film emulator with all of the positives and none of the negatives.
@@ -7,37 +9,37 @@ filmulator [options] <input filename> [exposure compensation]
 .SH DESCRIPTION
 Filmulator takes in a linear image file (such as a camera raw file) and uses it to virtually expose and develop film. The resulting image has compressed overall dynamic range, but increased local contrast and saturation, without jarring artifacts like haloing.
 .SH OPTIONS
+.TP
 -c <configuration file>
-
 	sets the configuration file to use in this filmulation.
 
+.TP
 -t
+used when inputting a tiff file instead of a raw file.
 
-	used when inputting a tiff file instead of a raw file.
-
+.TP
 -ji
+used when inputting a jpeg file instead of a raw file.
 
-	used when inputting a jpeg file instead of a raw file.
-
+.TP
 -h <number of images>
+sets input mode to HDR. This mode naturally stitches linear images together so that it appears that the camera had more dynamic range. At the end of the options, make sure to list all images with the exposure compensation used at capture in order from darkest to brightest image (e.g. filmulator -h 3 image1 -1 image2 0 image3 1)
 
-	sets input mode to HDR. This mode naturally stitches linear images together so that it appears that the camera had more dynamic range. At the end of the options, make sure to list all images with the exposure compensation used at capture in order from darkest to brightest image (e.g. filmulator -h 3 image1 -1 image2 0 image3 1)
-
+.TP
 -w <whitepoint>
+sets the final film density that is pure white in the output. This can be used when converting a video to keep dark scenes dark in the output. 2.0 is a reasonable value for the whitepoint.
 
-	sets the final film density that is pure white in the output. This can be used when converting a video to keep dark scenes dark in the output. 2.0 is a reasonable value for the whitepoint.
-
+.TP
 -jo
+sets the output to a jpeg instead of a tiff
 
-	sets the output to a jpeg instead of a tiff
-
+.TP
 -n
+sets the output to use a tone curve that works well with most images. This option is useful if you do not intend to set your own tone curve in postprocessing.
 
-	sets the output to use a tone curve that works well with most images. This option is useful if you do not intend to set your own tone curve in postprocessing.
-
+.TP
 -l <highlight recovery code>
-
-	sets Filmulator to use highlight recovery when processing raw files. The highlight recovery code corresponds to the equivalent option in dcraw.
+sets Filmulator to use highlight recovery when processing raw files. The highlight recovery code corresponds to the equivalent option in dcraw.
 
 
 .SH SEE ALSO
