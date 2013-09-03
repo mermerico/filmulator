@@ -23,9 +23,14 @@ installconf:
 	mkdir -p $(HOMECONFDIR)
 	cp $(SRCDIR)/configuration.txt $(HOMECONFDIR)/configuration.txt
 
-install: filmulator
+manpage/filmulator.1.gz: manpage/filmulator
+	cp manpage/filmulator manpage/filmulator.1
+	gzip manpage/filmulator.1
+
+install: filmulator manpage/filmulator.1.gz
 	$(INSTALL) filmulator $(BINDIR)/filmulator
 	$(INSTALL) $(SRCDIR)/batch-filmulate.sh $(BINDIR)/batch-filmulate
-
+	mkdir -p $(INSTALL_PATH)/man/man1
+	cp $(SRCDIR)/manpage/filmulator.1.gz $(INSTALL_PATH)/man/man1/filmulate.1.gz
 clean:
 	rm -f *.o *~

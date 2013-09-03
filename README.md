@@ -28,6 +28,8 @@ To build and install filmulator, run
 
 # Running Filmulator
 
+To process an image run `filmulator [options] [image_filename]`. For a full list of options, type `man filmulator`.
+
 For general purpose batch raw conversion, `cd` to a directory containing your raw files, and run `batch-filmulator .DNG` with `.DNG` replaced by whatever the file extension of your raw files.
 
 Filmulator will create 16-bit TIFF files with -output.tif appended to the filenames of all of the raw files in the current directory.
