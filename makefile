@@ -31,6 +31,6 @@ install: filmulator manpage/filmulator.1.gz
 	$(INSTALL) filmulator $(BINDIR)/filmulator
 	$(INSTALL) $(SRCDIR)/batch-filmulate.sh $(BINDIR)/batch-filmulate
 	mkdir -p $(INSTALL_PATH)/man/man1
-	cp $(SRCDIR)/manpage/filmulator.1.gz $(INSTALL_PATH)/man/man1/filmulate.1.gz
+	cp $(SRCDIR)/manpage/filmulator.1.gz $(INSTALL_PATH)/man/man1/filmulator.1.gz
 clean:
 	rm -f *.o *~ manpage/*.gz
