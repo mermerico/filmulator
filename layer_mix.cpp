@@ -40,13 +40,12 @@ void layer_mix(matrix<float> &developer_concentration,
     float layer_mix = pow(layer_mix_const,timestep/layer_time_divisor);
     dout << "layer mix: " << layer_mix << endl;
 
-    //This gives us the proportion that stays in the layer.
-    float layer_portion = 1 - layer_mix;
+    //layer_mix is the proportion of developer that stays in the layer.
 
-    //This gives us the amount that comes from the reservoir.
-    float reservoir_portion = layer_mix * reservoir_developer_concentration;
+    //This gives us the amount of developer that comes from the reservoir.
+    float reservoir_portion = (1-layer_mix) * reservoir_developer_concentration;
 
-    //This lets us count how much developer got added to the layer.
+    //This lets us count how much developer got added to the layer in total.
     double sum = 0;
 
     //Here we add developer to the layer.
@@ -61,7 +60,7 @@ void layer_mix(matrix<float> &developer_concentration,
             {
                 temp = developer_concentration(row,col) * layer_portion +
                     reservoir_portion;
-                //Here we accumulate how much goes into the layer.
+                //Here we accumulate how much developer went into the layer.
                 sum += temp-developer_concentration(row,col);
                 developer_concentration(row,col) = temp;
             }
