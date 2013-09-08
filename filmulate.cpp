@@ -98,6 +98,11 @@ matrix<float> filmulate(matrix<float> &input_image,
          << " seconds" << endl;
     gettimeofday(&development_start,NULL);
 
+#ifdef DOUT
+    ofstream debug_out;
+    debug_out.open("debug_output.txt",ios::out);
+#endif
+
     //Now we begin the main development/diffusion loop, which approximates the
     //differential equation of film development.
     for(int i = 0; i <= development_resolution; i++)
@@ -150,7 +155,6 @@ matrix<float> filmulate(matrix<float> &input_image,
         
         gettimeofday(&agitate_start,NULL);
         
-        dout << "before agitate: developer concentration: " << mean(developer_concentration) << endl;
         //I want agitation to only occur in the middle of development, not
         //at the very beginning or the ends. So, I add half the agitate
         //period to the current cycle count.
@@ -160,6 +164,16 @@ matrix<float> filmulate(matrix<float> &input_image,
                     pixels_per_millimeter);
        
         agitate_dif += time_diff(agitate_start);
+#ifdef DOUT
+        float mean_developer_concentration = mean(developer_concentration);
+        float mean_crystal_radius = mean(crystal_radius);
+        float mean_silver_salt_density = mean(silver_salt_density);
+        debug_out << mean_developer_concentration << ","
+                  << mean_crystal_radius << ","
+                  << mean_silver_salt_density << ","
+                  << reservoir_developer_concentration << endl;
+        dout << "After agitate: developer concentration = " << mean_developer_concentration << endl;
+#endif
     }
     cout<< "====== Development  100% complete ======" << endl;
     tout<<"Development time: "<<time_diff(development_start)<<" seconds"<<endl;
@@ -171,8 +185,6 @@ matrix<float> filmulate(matrix<float> &input_image,
     //Done filmulating, now do some housecleaning
     silver_salt_density.free();
     developer_concentration.free();
-    dout << "reservoir_developer_concentration: " <<
-        reservoir_developer_concentration << endl;
 
 
     //Now we compute the density (opacity) of the film.
@@ -184,6 +196,9 @@ matrix<float> filmulate(matrix<float> &input_image,
     matrix<float> output_density;
     output_density = crystal_radius % crystal_radius % active_crystals_per_pixel;
     tout << "Output density time: "<<time_diff(mult_start) << endl;
+#ifdef DOUT
+    debug_out.close();
+#endif
 	return output_density;
 }
 
