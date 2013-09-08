@@ -11,7 +11,7 @@ Filmulator takes in a linear image file (such as a camera raw file) and uses it 
 .SH OPTIONS
 .TP
 -c <configuration file>
-	sets the configuration file to use in this filmulation.
+sets the configuration file to use in this filmulation.
 
 .TP
 -t
