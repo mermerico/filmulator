@@ -50,7 +50,7 @@ void layer_mix(matrix<float> &developer_concentration,
 
     //Here we add developer to the layer.
 #pragma omp parallel shared(developer_concentration) \
-        firstprivate(layer_portion, reservoir_portion) reduction(+:sum)
+        firstprivate(layer_mix, reservoir_portion) reduction(+:sum)
     {
 #pragma omp for schedule(dynamic) nowait
         for(int row=0; row<length; row++)
@@ -58,7 +58,7 @@ void layer_mix(matrix<float> &developer_concentration,
             float temp;
             for(int col=0; col<width; col++)
             {
-                temp = developer_concentration(row,col) * layer_portion +
+                temp = developer_concentration(row,col) * layer_mix +
                     reservoir_portion;
                 //Here we accumulate how much developer went into the layer.
                 sum += temp-developer_concentration(row,col);
