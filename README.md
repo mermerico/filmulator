@@ -30,8 +30,10 @@ To build and install filmulator, run
 
 To process an image run `filmulator [options] [image_filename]`. For a full list of options, type `man filmulator`.
 
-For general purpose batch raw conversion, `cd` to a directory containing your raw files, and run `batch-filmulator .DNG` with `.DNG` replaced by whatever the file extension of your raw files.
+For general purpose batch raw conversion, `cd` to a directory containing your raw files, and run `batch-filmulator -e .DNG` with `.DNG` replaced by whatever the file extension of your raw files.
 
 Filmulator will create 16-bit TIFF files with -output.tif appended to the filenames of all of the raw files in the current directory.
 
 Process these in whatever photo editing program you like.
+
+If you have multiple subdirectories with raw files, change directory to one that encompasses them, and use the `-r` option to recursively scan through inner directories. If you want to rerun filmulator on only images which don't have tiffs, then you can use the `-o` option.
