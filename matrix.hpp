@@ -89,6 +89,7 @@ class matrix
 		T min();
 		double mean();
 		double variance();
+        void swap(matrix<T> &othermatrix);
 };
 
 template <class T>
@@ -183,6 +184,20 @@ void matrix<T>::set_size(const int nrows, const int ncols)
 	num_cols = ncols;	
 	delete [] data;
 	data = new T[nrows*ncols];
+}
+
+template <class T>
+void matrix<T>::swap(matrix<T> &othermatrix)
+{
+    float *temp = othermatrix.data;
+    othermatrix.data = data;
+    data = temp;
+    int temp2 = othermatrix.num_rows;
+    othermatrix.num_rows = num_rows;
+    num_rows = temp2;
+    temp2 = othermatrix.num_cols;
+    othermatrix.num_cols = num_cols;
+    num_cols = temp2;
 }
 
 template <class T>

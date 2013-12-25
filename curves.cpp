@@ -77,10 +77,10 @@ void apply_tone_curve(LUT &lookup,matrix<float> &output_density,
     //Here I set up indices for reading the interlaced colors.
     int ir, ig, ib;
 
-#pragma omp parallel shared(lookup, output_density, output_r, output_g,\
+//#pragma omp parallel shared(lookup, output_density, output_r, output_g,\
                             output_b, xsize, ysize) private(ir, ig, ib)
     {
-#pragma omp for schedule(dynamic) nowait
+//#pragma omp for schedule(dynamic) nowait
 	for (int i = 0; i < xsize; i++)
 	{
         //Setting up the indices for the colors.

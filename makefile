@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 CC=g++
-CFLAGS= -DTOUT -O3 -DDLIB_NO_GUI_SUPPORT -lpthread -ltiff -lexiv2 -ljpeg -fprefetch-loop-arrays -lraw -fopenmp
-DEBUG_FLAG =  
+CFLAGS= -DTOUT -O3 -DDLIB_NO_GUI_SUPPORT -lpthread -ltiff -lexiv2 -ljpeg -fprefetch-loop-arrays -lraw
+DEBUG_FLAG = -g
 DEPS = header.hpp lut.hpp matrix.hpp
 OBJ = agitate.o filmulator.o read_args.o filmulate.o postprocess.o output_file.o exposure.o develop.o diffuse.o imread.o imload.o imwrite.o layer_mix.o merge_exps.o initialize.o imwrite_tiff.o imread_tiff.o imwrite_jpeg.o curves.o imread_jpeg.o time_diff.o
 INSTALL_PATH = /usr/local

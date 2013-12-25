@@ -62,6 +62,7 @@ void diffuse(matrix<float> &developer_concentration,
     //number of values averaged. The number of values averaged is always
     //<convlength>^<order>
     float swell_factor = 1.0/pow(convlength,order);
+    float subswell = 1.0/convlength;
 
     //Here we allocate a matrix sized the same as a row, plus room for padding
     //mirrored from the internal content.
@@ -71,12 +72,49 @@ void diffuse(matrix<float> &developer_concentration,
 
     diffuse_x(developer_concentration,convlength,convrad,pad,paddedwidth,
               order, swell_factor);
-    matrix<float> transposed_developer_concentration(width,length);
-    developer_concentration.transpose_to(transposed_developer_concentration);
-    diffuse_x(transposed_developer_concentration,convlength,convrad,pad,
-              paddedheight, order, swell_factor);
-    transposed_developer_concentration.transpose_to(developer_concentration);
+//    matrix<float> transposed_developer_concentration(width,length);
+//    developer_concentration.transpose_to(transposed_developer_concentration);
+//    diffuse_x(transposed_developer_concentration,convlength,convrad,pad,
+//              paddedheight, order, swell_factor);
+//    transposed_developer_concentration.transpose_to(developer_concentration);
 
+    vector<float> running_sum(width);
+    for (int i = 0; i < width; i++)
+        running_sum[i] = 0;
+    int row;
+    int col;
+    int pass;
+    matrix<float> temp_concentration(length, width);
+    //mirroring
+    for (pass = 0; pass < order; pass++)
+    {
+        //initializing the running sum
+        for (row = 0; row < convrad; row++)
+        {
+            for(col = 0; col < width; col++)
+            {
+                running_sum[col] += 2*developer_concentration(row,col);
+            }
+        }
+        for (row = 0; row < length; row++)
+        {
+            //mirrored row indices. The high one needs to fold back on top;
+            // the low one folds up when it tries to be negative.
+            int mrowhi = min(row+convrad, 2*length-1-(row+convrad));
+            int mrowlo = abs(row-convrad);
+
+            for(col = 0; col < width; col++)
+            {
+                running_sum[col] += developer_concentration(mrowhi,col);
+                temp_concentration(row,col) = running_sum[col];//*subswell;
+                running_sum[col] -= developer_concentration(mrowlo,col);
+            }
+        }
+        //tout << "temp_conc rows: " << temp_concentration.nr() << endl;
+        //tout << "temp_conc cols: " << temp_concentration.nc() << endl;
+        //developer_concentration = temp_concentration;
+        developer_concentration.swap(temp_concentration);
+    }
     return;
 }
 
