@@ -78,9 +78,7 @@ void diffuse(matrix<float> &developer_concentration,
 //              paddedheight, order, swell_factor);
 //    transposed_developer_concentration.transpose_to(developer_concentration);
 
-    vector<float> running_sum(width);
-    for (int i = 0; i < width; i++)
-        running_sum[i] = 0;
+    vector<float> running_sum = vector<float>(width,0);
     int row;
     int col;
     int pass;
@@ -88,9 +86,11 @@ void diffuse(matrix<float> &developer_concentration,
     //mirroring
     for (pass = 0; pass < order; pass++)
     {
+        running_sum = vector<float>(width,0);
         //initializing the running sum
         for (row = 0; row < convrad; row++)
         {
+#pragma omp parallel for schedule(dynamic, 4096)
             for(col = 0; col < width; col++)
             {
                 running_sum[col] += 2*developer_concentration(row,col);
@@ -103,16 +103,14 @@ void diffuse(matrix<float> &developer_concentration,
             int mrowhi = min(row+convrad, 2*length-1-(row+convrad));
             int mrowlo = abs(row-convrad);
 
+#pragma omp parallel for schedule(dynamic, 4096)
             for(col = 0; col < width; col++)
             {
                 running_sum[col] += developer_concentration(mrowhi,col);
-                temp_concentration(row,col) = running_sum[col];//*subswell;
+                temp_concentration(row,col) = running_sum[col]*subswell;
                 running_sum[col] -= developer_concentration(mrowlo,col);
             }
         }
-        //tout << "temp_conc rows: " << temp_concentration.nr() << endl;
-        //tout << "temp_conc cols: " << temp_concentration.nc() << endl;
-        //developer_concentration = temp_concentration;
         developer_concentration.swap(temp_concentration);
     }
     return;

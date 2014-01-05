@@ -189,9 +189,10 @@ void matrix<T>::set_size(const int nrows, const int ncols)
 template <class T>
 void matrix<T>::swap(matrix<T> &othermatrix)
 {
-    float *temp = othermatrix.data;
-    othermatrix.data = data;
-    data = temp;
+    std::swap(data,othermatrix.data);
+//    float *temp = othermatrix.data;
+//    othermatrix.data = data;
+//    data = temp;
     int temp2 = othermatrix.num_rows;
     othermatrix.num_rows = num_rows;
     num_rows = temp2;
