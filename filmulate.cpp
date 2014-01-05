@@ -51,7 +51,14 @@ matrix<float> filmulate(matrix<float> &input_image,
     int nrows = (int) input_image.nr();
     int ncols = (int) input_image.nc()/3;
     int npix = nrows*ncols;
-	
+
+    //Now we activate some of the crystals on the film. This is literally
+    //akin to exposing film to light.
+    matrix<float> active_crystals_per_pixel;
+    active_crystals_per_pixel = exposure(input_image, crystals_per_pixel,
+            rolloff_boundary);
+    input_image.free();
+ 
     //We set the crystal radius to a small seed value for each color.
     matrix<float> crystal_radius;
     crystal_radius.set_size(nrows,ncols*3);
@@ -86,14 +93,7 @@ matrix<float> filmulate(matrix<float> &input_image,
     else
 		agitate_period = 3*development_resolution;
 	int half_agitate_period = floor(agitate_period/2);
-
-    //Now we activate some of the crystals on the film. This is literally
-    //akin to exposing film to light.
-    matrix<float> active_crystals_per_pixel;
-    active_crystals_per_pixel = exposure(input_image, crystals_per_pixel,
-            rolloff_boundary);
-    input_image.free();
-    
+   
     tout << "Initialization time: " << time_diff(initialize_start)
          << " seconds" << endl;
     gettimeofday(&development_start,NULL);
