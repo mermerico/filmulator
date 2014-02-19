@@ -4,13 +4,13 @@ directory=$HOME"/Photos/hdr/"
 # you want to process for this HDR.
 # The files should be orderered in 0 + - ++ -- order.
 # The directory name should end in a slash.
-extension=".CR2"
+extension=".DNG"
 #The extension is whatever the extension of your raw file is.
 count=0
 #The count must start at zero; this is just an initialization.
-initialexpcomp=3
+initialexpcomp=0
 #This must be an integer.
-bracketstep=3
+bracketstep=2
 #As must this. It doesn't matter exactly the values, as long as the most negative value is close to what it was when you took the photo. As a guideline.
 positive=1
 #positive must start at 1; this is just an initialization.
@@ -44,4 +44,4 @@ do
     fi
 done
 echo "./filmulator -c configuration.txt -h $count ${filenames[@]}"
-./filmulator -c HDRconfiguration.txt -h $count ${filenames[@]}
+./filmulator -c configuration.txt -h $count ${filenames[@]}
